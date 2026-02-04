@@ -89,24 +89,40 @@ A simple Newtonian point-mass gravity example has been added. Use `simulate_grav
 
 ### CSV output & plotting
 
-The `main` program supports a simple CSV dump for post-processing:
+The `main` program supports CSV dumps for post-processing (columns: `step,body,x,y,vx,vy`):
 
 ```bash
-./PhysicsEngine --csv out.csv
+./PhysicsEngine.exe --csv out.csv
 ```
 
-Use the included plotting helper to visualize trajectories (requires Python + matplotlib):
+The simulator includes simple CLI options for running scenarios and controlling output:
+- `--scenario {two-body,three-body,random}`
+- `--steps N` (number of steps)
+- `--dt seconds` (timestep size)
+- `--sample interval` (sample every N steps)
+- `--n N` and `--seed S` (for `random` scenario)
+
+Example — random 6-body run dumping CSV:
 
 ```bash
-python scripts/plot_gravity.py out.csv
+./PhysicsEngine.exe --scenario random --n 6 --seed 1 --steps 1000 --dt 60 --csv scripts/complex_gravity.csv --sample 1
 ```
 
-Install requirements:
+Use the included plotting helper to visualize results (no extra Python runtime deps required; it writes SVGs):
+
+- Trajectory (x vs y) — default
 
 ```bash
-pip install -r requirements.txt
+python scripts/plot_gravity.py scripts/complex_gravity.csv -o scripts/complex_trajectories.svg
 ```
 
+- Distance vs time (pairwise distances) — use `-t distance` and `--pairs` to select pairs (e.g. `0-1` or `all`):
+
+```bash
+python scripts/plot_gravity.py scripts/complex_gravity.csv -t distance --pairs 0-1 -o scripts/pair_0-1.svg
+```
+
+To convert SVG to PNG use a tool like Inkscape or Pillow (note: Pillow may require system libs such as zlib/libjpeg on Windows if built from source).
 ---
 
 ### Running tests
@@ -136,7 +152,6 @@ The simple `gravity_test` checks basic momentum conservation for a tiny two-body
 
 Use the provided scripts to quickly clean and recreate the `build/` directory:
 
-- Windows (PowerShell / CMD): `scripts\clean_build.bat`
 - POSIX / Git Bash: `scripts/clean_build.sh`
 
 ---

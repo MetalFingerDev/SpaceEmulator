@@ -1,2 +1,1 @@
-matplotlib>=3.0
-numpy>=1.20
+# no runtime Python deps required

@@ -83,6 +83,10 @@ cmake --build . -- -j$(nproc)
 - Use `#pragma omp parallel sections` for coarse-grained independent tasks.
 - A simple gravity simulation example (point masses, O(N^2) pairwise) has been added: see `simulate_gravity_step` and the `Body` struct in `include/physics.hpp` for details.
 
+  - The `main` executable supports CSV dumps for post-processing via `--csv out.csv`. CSV columns are `step,body,x,y,vx,vy` (sampled per-step or at a user-defined interval).
+  - The simulator has CLI options: `--scenario {two-body,three-body,random}`, `--steps`, `--dt`, `--sample`, `--n` and `--seed` to produce more complex datasets for plotting or analysis.
+  - Use the `scripts/plot_gravity.py` helper to create SVG visualizations. It supports `trajectory` (default) and `distance` plot types (`-t distance`) and accepts `--pairs` (e.g. `0-1,0-2` or `all`). This script has no runtime Python dependencies and writes SVG output by default.
+
 ---
 
 ## Troubleshooting
@@ -121,7 +125,7 @@ Agent rules and constraints:
 2. Before changing CMake or build scripts, ensure the change is cross-platform (Windows & Linux) or document platform-specific differences clearly.
 3. For any non-trivial change, create or update unit tests and verify a full build on both Windows (MinGW) and Linux (or simulate using GitHub Actions). Report failures with exact commands and logs.
 4. When adding dependencies, update `README.md` with installation steps and add CI steps to install those deps.
-5. Use the root `build` (POSIX) and `build.bat` (Windows) helpers when a rebuild is required; `scripts/` contains legacy wrappers for backwards compatibility; avoid in-place modifications of `build/` content.
+5. Use the root `build` (POSIX) helper when a rebuild is required; `scripts/` contains legacy wrappers for backwards compatibility; avoid in-place modifications of `build/` content.
 6. If modifying any public API (`include/*.hpp`), add a short migration note in the PR description and update any affected tests.
 7. Add `CMakePresets.json` when introducing standard build profiles (Debug/Release) and document usage in `README.md`.
 8. For performance-related changes, provide micro-benchmarks or before/after results and include reproducible commands to run them.

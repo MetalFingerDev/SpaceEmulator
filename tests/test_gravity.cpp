@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <array>
 
 // Basic test: momentum conservation for isolated two-body system
 int main() {

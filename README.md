@@ -87,6 +87,41 @@ A simple Newtonian point-mass gravity example has been added. Use `simulate_grav
 
 > Note: The implementation is O(N^2) pairwise interactions with a small softening term; replace with Barnes–Hut or other hierarchical method for large N.
 
+### CSV output & plotting
+
+The `main` program supports a simple CSV dump for post-processing:
+
+```bash
+./PhysicsEngine --csv out.csv
+```
+
+Use the included plotting helper to visualize trajectories (requires Python + matplotlib):
+
+```bash
+python scripts/plot_gravity.py out.csv
+```
+
+Install requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Running tests
+
+You can build and run the included basic tests by enabling the `ENABLE_TESTING` CMake option and using CTest:
+
+```bash
+mkdir -p build && cd build
+cmake -DENABLE_TESTING=ON -G "MinGW Makefiles" ..
+mingw32-make
+ctest -V
+```
+
+The simple `gravity_test` checks basic momentum conservation for a tiny two-body scenario.
+
 ---
 
 ## Troubleshooting

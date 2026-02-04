@@ -15,3 +15,12 @@ find_package(OpenMP REQUIRED)
 add_executable(PhysicsEngine src/main.cpp src/engine.cpp src/gravity.cpp)
 
 target_link_libraries(PhysicsEngine PUBLIC OpenMP::OpenMP_CXX)
+
+# Optional testing targets
+option(ENABLE_TESTING "Build and run tests" OFF)
+if(ENABLE_TESTING)
+  enable_testing()
+  add_executable(test_gravity tests/test_gravity.cpp src/gravity.cpp src/engine.cpp)
+  target_link_libraries(test_gravity PUBLIC OpenMP::OpenMP_CXX)
+  add_test(NAME gravity_test COMMAND test_gravity)
+endif()

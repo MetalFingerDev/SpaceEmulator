@@ -33,6 +33,21 @@ int main() {
     std::cout << std::format(header_cols, "", "x(m)", "y(m)", "vx", "vy", "x(m)", "y(m)", "vx", "vy");
     std::cout << std::string(89, '-') << "\n";
 
+    // Optionally dump CSV if requested (usage: ./PhysicsEngine --csv out.csv)
+    std::string csv_path;
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "--csv" && (i + 1) < argc) {
+            csv_path = argv[i+1];
+            break;
+        }
+    }
+
+    std::ofstream csv;
+    if (!csv_path.empty()) {
+        csv.open(csv_path);
+        csv << "step,body,x,y,vx,vy\n";
+    }
+
     for (int step = 0; step < 10; ++step) {
         simulate_gravity_step(bodies, dt);
         if (step % 2 != 0) continue;
@@ -41,7 +56,12 @@ int main() {
         std::cout << std::format(row_fmt, step,
                                  b0.x, b0.y, b0.vx, b0.vy,
                                  b1.x, b1.y, b1.vx, b1.vy);
+        if (csv.is_open()) {
+            csv << step << ",0," << b0.x << "," << b0.y << "," << b0.vx << "," << b0.vy << "\n";
+            csv << step << ",1," << b1.x << "," << b1.y << "," << b1.vx << "," << b1.vy << "\n";
+        }
     }
+    if (csv.is_open()) csv.close();
 
     return 0;
 }

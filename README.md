@@ -104,5 +104,3 @@ Use the provided scripts to quickly clean and recreate the `build/` directory:
 - Consider adding a `CMakePresets.json` for standardized invocation across machines.
 
 ---
-
-If you'd like, I can also add CI configuration (GitHub Actions) to build on Windows and Linux. ✅

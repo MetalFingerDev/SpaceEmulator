@@ -81,6 +81,7 @@ cmake --build . -- -j$(nproc)
 - Loops that iterate over independent ranges use `#pragma omp parallel for`.
 - Reductions must use `reduction(+:sum)` (or appropriate operator) to avoid data races.
 - Use `#pragma omp parallel sections` for coarse-grained independent tasks.
+- A simple gravity simulation example (point masses, O(N^2) pairwise) has been added: see `simulate_gravity_step` and the `Body` struct in `include/physics.hpp` for details.
 
 ---
 

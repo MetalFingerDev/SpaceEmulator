@@ -81,6 +81,14 @@ On Windows PowerShell or CMD use `.uild\PhysicsEngine.exe`.
 
 ---
 
+## Gravity simulation
+
+A simple Newtonian point-mass gravity example has been added. Use `simulate_gravity_step(std::vector<Body>& bodies, double dt, double G)` to advance a set of `Body` point masses by one timestep. The `main` demo runs a tiny two-body scenario and prints a readable table (per-step) of positions (meters) and velocities (m/s).
+
+> Note: The implementation is O(N^2) pairwise interactions with a small softening term; replace with Barnes–Hut or other hierarchical method for large N.
+
+---
+
 ## Troubleshooting
 
 - "cmake: command not found" or "mingw32-make: command not found": add your MINGW64 `bin` path to `PATH`.

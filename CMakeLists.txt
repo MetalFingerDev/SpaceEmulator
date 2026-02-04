@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(PhysicsEngine)
 
-set(CMAKE_CXX_STANDARD 17)
+# Require C++20 for std::format and modern features
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Tell CMake where the header files are
 include_directories(include)
@@ -10,6 +12,6 @@ include_directories(include)
 find_package(OpenMP REQUIRED)
 
 # Point to the files inside the src/ folder
-add_executable(PhysicsEngine src/main.cpp src/engine.cpp)
+add_executable(PhysicsEngine src/main.cpp src/engine.cpp src/gravity.cpp)
 
 target_link_libraries(PhysicsEngine PUBLIC OpenMP::OpenMP_CXX)

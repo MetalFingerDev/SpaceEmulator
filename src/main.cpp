@@ -1,5 +1,6 @@
 #include "physics.hpp"
 #include <iostream>
+#include <format>
 
 int main() {
     std::vector<double> v1 = {1.0, 2.0, 3.0, 4.0};
@@ -11,6 +12,32 @@ int main() {
     // 2. Test Loop Work-sharing
     double dot = vector_dot(v1, v2);
     std::cout << "Dot Product: " << dot << std::endl;
+
+    // 3. Test gravity (simple two-body demo)
+    std::vector<Body> bodies = {
+        // x, y, z, vx, vy, vz, mass
+        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.972e24},  // heavy body (Earth-like)
+        {4.0e7, 0.0, 0.0, 0.0, 1200.0, 0.0, 1.0e3}  // small body with initial tangential velocity
+    };
+    double dt = 1.0; // seconds per step
+
+    // Compact two-column table: show x,y,vx,vy for each body and sample every 2 steps
+    constexpr auto row_fmt = "{:<4} | {:>10.2f} {:>8.2f} {:>8.2f} {:>8.2f} || {:>10.2f} {:>8.2f} {:>8.2f} {:>8.2f}\n";
+
+    std::cout << "\nGravity demo (sampled every 2 steps)\n";
+    std::cout << "--------------------------------------------------------------\n";
+    std::cout << std::format("{:<4} | {:>34} || {:>34}\n", "Step", "Body0 (x y vx vy)", "Body1 (x y vx vy)");
+    std::cout << "--------------------------------------------------------------\n";
+
+    for (int step = 0; step < 10; ++step) {
+        simulate_gravity_step(bodies, dt);
+        if (step % 2 != 0) continue;
+        auto &b0 = bodies[0];
+        auto &b1 = bodies[1];
+        std::cout << std::format(row_fmt, step,
+                                 b0.x, b0.y, b0.vx, b0.vy,
+                                 b1.x, b1.y, b1.vx, b1.vy);
+    }
 
     return 0;
 }

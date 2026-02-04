@@ -1,26 +1,146 @@
-# Agent Context: Simple Physics Engine
+# Agent Context: SpaceEmulator (C++/OpenMP) 🚀
 
-## Purpose
+## Project purpose
 
-A bare-bones educational project for learning C++ parallelism using OpenMP.
+SpaceEmulator is a compact educational C++ physics engine example that demonstrates performance-oriented vector operations and simple task parallelism using OpenMP. It is intentionally small so contributors and learners can focus on parallel patterns, correctness, and build portability across Windows (MinGW) and POSIX systems.
 
-## Tech Stack
+---
 
-- **Language**: C++17
-- **Build System**: CMake
-- **Parallelism**: OpenMP (find_package(OpenMP))
+## Quick facts
 
-## Key Implementations
+- **Language:** C++17
+- **Parallelism:** OpenMP (loop work-sharing, reductions, sections)
+- **Build system:** CMake (out-of-source builds encouraged)
+- **Primary target:** Windows (MSYS2 / MinGW-w64) and Linux
 
-1. **Vector Math**: `engine.cpp` uses `#pragma omp parallel for` for vector addition and dot product (with reduction).
-2. **Work-sharing**: `run_parallel_tasks()` demonstrates `#pragma omp parallel sections`.
-3. **Data Structures**: Uses `std::vector<double>` for arbitrary length support.
+---
 
-## Building
+## Repository layout
+
+- `include/` — public headers (`physics_engine.hpp`)
+- `src/` — implementation (`engine.cpp`, `main.cpp`)
+- `scripts/` — helper scripts (e.g., `clean_build.*`)
+- `build/` — out-of-source build artifacts (gitignored)
+- `CMakeLists.txt` — CMake configuration
+- `AGENTS.md`, `README.md` — project metadata and contributor guidance
+
+---
+
+## Build & run
+
+### Windows (recommended: MSYS2 / MINGW64)
+
+1. Open **MSYS2 MINGW64** shell or Git Bash (MINGW64 environment).
+2. Create and enter build directory:
 
 ```bash
-mkdir build && cd build
-cmake ..
-make
+mkdir -p build && cd build
+```
+
+3. Configure using MinGW Makefiles (important on Windows):
+
+```bash
+cmake -G "MinGW Makefiles" ..
+```
+
+4. Build:
+
+```bash
+mingw32-make
+```
+
+5. Run:
+
+```bash
+./PhysicsEngine.exe
+```
+
+> If CMake chooses Visual Studio by mistake, remove the `build/` folder and re-run `cmake -G "MinGW Makefiles" ..`.
+
+### Linux / macOS
+
+```bash
+mkdir -p build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . -- -j$(nproc)
 ./PhysicsEngine
 ```
+
+---
+
+## Development tips
+
+- Use out-of-source builds (`build/`) to keep the repo clean.
+- Add `-DENABLE_TESTING=ON` in CMake (if tests are added) to enable unit tests.
+- Consider adding `ccache` and `-j` parallel builds to speed iteration.
+
+---
+
+## Parallelism notes
+
+- Loops that iterate over independent ranges use `#pragma omp parallel for`.
+- Reductions must use `reduction(+:sum)` (or appropriate operator) to avoid data races.
+- Use `#pragma omp parallel sections` for coarse-grained independent tasks.
+
+---
+
+## Troubleshooting
+
+- "cmake: command not found" or "mingw32-make: command not found": ensure MINGW64's `bin` directory (e.g., `C:\msys64\mingw64\bin`) is on `PATH`.
+- Link or compile errors referencing OpenMP: ensure you are building with a GCC toolchain that supports OpenMP (MinGW-w64 GCC versions generally do).
+- If a previously generated build files target the wrong generator, delete `build/` and reconfigure with the correct `-G` option.
+
+---
+
+## CI suggestion
+
+Add a GitHub Actions workflow that:
+
+- Builds on Windows (MSYS2/MINGW64) and Ubuntu
+- Runs any unit tests
+- Optionally runs static analysis (clang-tidy, cpplint) and code format checks
+
+---
+
+## How to contribute
+
+- Fork -> branch -> implement -> open PR
+- Keep changes focused and add tests for behavior changes
+- Follow consistent commit message style (short summary, blank line, body)
+
+---
+
+## For AI agents (operational guidance) 🤖
+
+Purpose: help contributors by automating edits, refactors, tests, CI setup, and documentation while preserving build reproducibility.
+
+Agent rules and constraints:
+
+1. Work only on source, build configuration, scripts, and documentation. Do NOT modify files under `build/` or other generated artifacts.
+2. Before changing CMake or build scripts, ensure the change is cross-platform (Windows & Linux) or document platform-specific differences clearly.
+3. For any non-trivial change, create or update unit tests and verify a full build on both Windows (MinGW) and Linux (or simulate using GitHub Actions). Report failures with exact commands and logs.
+4. When adding dependencies, update `README.md` with installation steps and add CI steps to install those deps.
+5. Use the `scripts/clean_build.*` helpers when a rebuild is required; avoid in-place modifications of `build/` content.
+6. If modifying any public API (`include/*.hpp`), add a short migration note in the PR description and update any affected tests.
+7. Add `CMakePresets.json` when introducing standard build profiles (Debug/Release) and document usage in `README.md`.
+8. For performance-related changes, provide micro-benchmarks or before/after results and include reproducible commands to run them.
+9. Keep PRs small and focused; include test artifacts (input/expected) when relevant.
+
+Agent reporting format for actions (use this in PRs or automated messages):
+
+- Summary: one-line change summary
+- Files touched: bullet list
+- Build: commands run and results (Success/Failure + key logs)
+- Tests: pass/fail and failing tests
+- Notes: follow-up items or recommended next steps
+
+---
+
+## Known issues
+
+- Project currently has a small test surface; adding unit tests is encouraged.
+- No CI is configured by default (add workflows per CI suggestion above).
+
+---
+
+If you want, I can: add a GitHub Actions workflow, create `CMakePresets.json`, or add a simple unit-test harness and CI-running tests. Reply with which you'd like next.

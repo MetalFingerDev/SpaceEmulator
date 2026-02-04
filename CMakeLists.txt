@@ -3,10 +3,13 @@ project(PhysicsEngine)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Find OpenMP package
+# Tell CMake where the header files are
+include_directories(include)
+
+# Find OpenMP
 find_package(OpenMP REQUIRED)
 
-add_executable(PhysicsEngine main.cpp engine.cpp)
+# Point to the files inside the src/ folder
+add_executable(PhysicsEngine src/main.cpp src/engine.cpp)
 
-# Link OpenMP to the executable
 target_link_libraries(PhysicsEngine PUBLIC OpenMP::OpenMP_CXX)

@@ -142,5 +142,3 @@ Agent reporting format for actions (use this in PRs or automated messages):
 - No CI is configured by default (add workflows per CI suggestion above).
 
 ---
-
-If you want, I can: add a GitHub Actions workflow, create `CMakePresets.json`, or add a simple unit-test harness and CI-running tests. Reply with which you'd like next.

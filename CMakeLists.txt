@@ -1,0 +1,1 @@
+# Build configuration (the "package.json" of C++)

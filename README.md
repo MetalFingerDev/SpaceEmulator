@@ -96,6 +96,7 @@ The `main` program supports CSV dumps for post-processing (columns: `step,body,x
 ```
 
 The simulator includes simple CLI options for running scenarios and controlling output:
+
 - `--scenario {two-body,three-body,random}`
 - `--steps N` (number of steps)
 - `--dt seconds` (timestep size)
@@ -122,8 +123,7 @@ python scripts/plot_gravity.py scripts/complex_gravity.csv -o scripts/complex_tr
 python scripts/plot_gravity.py scripts/complex_gravity.csv -t distance --pairs 0-1 -o scripts/pair_0-1.svg
 ```
 
-To convert SVG to PNG use a tool like Inkscape or Pillow (note: Pillow may require system libs such as zlib/libjpeg on Windows if built from source).
----
+## To convert SVG to PNG use a tool like Inkscape or Pillow (note: Pillow may require system libs such as zlib/libjpeg on Windows if built from source).
 
 ### Running tests
 

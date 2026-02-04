@@ -82,7 +82,6 @@ cmake --build . -- -j$(nproc)
 - Reductions must use `reduction(+:sum)` (or appropriate operator) to avoid data races.
 - Use `#pragma omp parallel sections` for coarse-grained independent tasks.
 - A simple gravity simulation example (point masses, O(N^2) pairwise) has been added: see `simulate_gravity_step` and the `Body` struct in `include/physics.hpp` for details.
-
   - The `main` executable supports CSV dumps for post-processing via `--csv out.csv`. CSV columns are `step,body,x,y,vx,vy` (sampled per-step or at a user-defined interval).
   - The simulator has CLI options: `--scenario {two-body,three-body,random}`, `--steps`, `--dt`, `--sample`, `--n` and `--seed` to produce more complex datasets for plotting or analysis.
   - Use the `scripts/plot_gravity.py` helper to create SVG visualizations. It supports `trajectory` (default) and `distance` plot types (`-t distance`) and accepts `--pairs` (e.g. `0-1,0-2` or `all`). This script has no runtime Python dependencies and writes SVG output by default.

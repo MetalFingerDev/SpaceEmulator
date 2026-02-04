@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-# Remove and recreate build directory (POSIX / Git Bash)
-set -e
-if [ -d build ]; then
-  rm -rf build
+set -euo pipefail
+
+# Legacy wrapper: delegate to root `build` helper
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [ -x "$REPO_ROOT/build" ]; then
+  exec "$REPO_ROOT/build" "$@"
+else
+  echo "This script has been moved to: $REPO_ROOT/build" >&2
+  exit 1
 fi
-mkdir -p build
-echo "Recreated build directory: $(pwd)/build"

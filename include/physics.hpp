@@ -1,5 +1,5 @@
-#ifndef PHYSICS_ENGINE_HPP
-#define PHYSICS_ENGINE_HPP
+#ifndef PHYSICS_HPP
+#define PHYSICS_HPP
 
 #include <vector>
 

@@ -19,7 +19,7 @@ SpaceEmulator is a compact educational C++ physics engine example that demonstra
 
 - `include/` — public headers (`physics_engine.hpp`)
 - `src/` — implementation (`engine.cpp`, `main.cpp`)
-- `scripts/` — helper scripts (e.g., `clean_build.*`)
+- `scripts/` — legacy wrapper scripts (e.g., `clean_build.*`); prefer using root `build` (POSIX) and `build.bat` (Windows)
 - `build/` — out-of-source build artifacts (gitignored)
 - `CMakeLists.txt` — CMake configuration
 - `AGENTS.md`, `README.md` — project metadata and contributor guidance
@@ -120,7 +120,7 @@ Agent rules and constraints:
 2. Before changing CMake or build scripts, ensure the change is cross-platform (Windows & Linux) or document platform-specific differences clearly.
 3. For any non-trivial change, create or update unit tests and verify a full build on both Windows (MinGW) and Linux (or simulate using GitHub Actions). Report failures with exact commands and logs.
 4. When adding dependencies, update `README.md` with installation steps and add CI steps to install those deps.
-5. Use the `scripts/clean_build.*` helpers when a rebuild is required; avoid in-place modifications of `build/` content.
+5. Use the root `build` (POSIX) and `build.bat` (Windows) helpers when a rebuild is required; `scripts/` contains legacy wrappers for backwards compatibility; avoid in-place modifications of `build/` content.
 6. If modifying any public API (`include/*.hpp`), add a short migration note in the PR description and update any affected tests.
 7. Add `CMakePresets.json` when introducing standard build profiles (Debug/Release) and document usage in `README.md`.
 8. For performance-related changes, provide micro-benchmarks or before/after results and include reproducible commands to run them.

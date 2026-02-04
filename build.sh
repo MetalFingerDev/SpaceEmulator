@@ -41,18 +41,31 @@ fi
 
 # Locate executable
 EXE_NAME="PhysicsEngine"
-POSSIBLE=("$BUILD_DIR/$EXE_NAME.exe" "$BUILD_DIR/Release/$EXE_NAME.exe" "$BUILD_DIR/Debug/$EXE_NAME.exe")
+# Include both POSIX (no ext) and Windows (.exe) locations, including common multi-config dirs
+POSSIBLE=(
+  "$BUILD_DIR/$EXE_NAME"
+  "$BUILD_DIR/$EXE_NAME.exe"
+  "$BUILD_DIR/Release/$EXE_NAME"
+  "$BUILD_DIR/Release/$EXE_NAME.exe"
+  "$BUILD_DIR/Debug/$EXE_NAME"
+  "$BUILD_DIR/Debug/$EXE_NAME.exe"
+)
 FOUND=""
 for p in "${POSSIBLE[@]}"; do
-  if [ -f "$p" ]; then
+  # prefer an existing file that is executable
+  if [ -f "$p" ] && [ -x "$p" ]; then
     FOUND="$p"
     break
   fi
 done
 
 if [ -z "$FOUND" ]; then
-  # Fallback: find any exe in build
-  FOUND="$(find "$BUILD_DIR" -maxdepth 3 -type f -iname "*.exe" -print -quit || true)"
+  # Fallback: find any executable file in the build tree (POSIX) or any .exe (Windows)
+  # -perm /111 finds files with any of the executable bits set
+  FOUND="$(find "$BUILD_DIR" -maxdepth 3 -type f -perm /111 -print -quit || true)"
+  if [ -z "$FOUND" ]; then
+    FOUND="$(find "$BUILD_DIR" -maxdepth 3 -type f -iname "*.exe" -print -quit || true)"
+  fi
 fi
 
 if [ -z "$FOUND" ]; then

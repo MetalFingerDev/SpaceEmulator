@@ -2,7 +2,7 @@
 
 > NOTE: Local experimental plotting changes were reverted on 2026-02-04 to restore the stable repository state.
 >
-A minimal C++ physics engine example focused on learning **OpenMP** parallelization and high-performance vector operations.
+> A minimal C++ physics engine example focused on learning **OpenMP** parallelization and high-performance vector operations.
 
 ---
 

@@ -1,4 +1,4 @@
-# Agent Context: SpaceEmulator (C++/OpenMP) 🚀
+# Agent Context: SpaceEmulator (C++/OpenMP)
 
 ## Project purpose
 
@@ -19,7 +19,7 @@ SpaceEmulator is a compact educational C++ physics engine example that demonstra
 
 - `include/` — public headers (`physics_engine.hpp`)
 - `src/` — implementation (`engine.cpp`, `main.cpp`)
-- `scripts/` — legacy wrapper scripts (e.g., `clean_build.*`); prefer using root `build` (POSIX) and `build.bat` (Windows)
+- `scripts/` — legacy helper scripts (e.g., plotting helpers); prefer using root `build.sh` (POSIX) and `build.bat` (Windows, if present).
 - `build/` — out-of-source build artifacts (gitignored)
 - `CMakeLists.txt` — CMake configuration
 - `AGENTS.md`, `README.md` — project metadata and contributor guidance
@@ -52,7 +52,13 @@ mingw32-make
 5. Run:
 
 ```bash
-./PhysicsEngine.exe
+# POSIX (after entering build/)
+./PhysicsEngine
+
+# Windows (PowerShell/CMD or from repo root)
+.\PhysicsEngine.exe
+# or
+build\PhysicsEngine.exe
 ```
 
 > If CMake chooses Visual Studio by mistake, remove the `build/` folder and re-run `cmake -G "MinGW Makefiles" ..`.
@@ -114,9 +120,9 @@ Add a GitHub Actions workflow that:
 
 ---
 
-## For AI agents (operational guidance) 🤖
+## For AI agents (operational guidance)
 
-> NOTE: Local experimental plotting changes were reverted on 2026-02-04 to keep the primary C++ codepath stable. Agents should avoid making persistent UI/visualization-only changes without a PR and tests.
+> NOTE: Local experimental plotting changes were reverted on 2026-02-04 to keep the primary C++ codebase stable. Agents should avoid making persistent UI or visualization-only changes without a PR and tests.
 
 Purpose: help contributors by automating edits, refactors, tests, CI setup, and documentation while preserving build reproducibility.
 
@@ -148,3 +154,4 @@ Agent reporting format for actions (use this in PRs or automated messages):
 - No CI is configured by default (add workflows per CI suggestion above).
 
 ---
+

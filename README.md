@@ -24,16 +24,18 @@
 
 ---
 
-## Build (Windows / MINGW64)
+## Build
 
-1. Open **Git Bash** or an MSYS2 MINGW64 shell in the project root.
+### Windows (MSYS2 / MINGW64)
+
+1. Open an MSYS2 MINGW64 shell or Git Bash in the project root.
 2. Create and enter the build folder:
 
 ```bash
 mkdir -p build && cd build
 ```
 
-3. Configure with MinGW Makefiles (important on Windows):
+3. Configure with MinGW Makefiles:
 
 ```bash
 cmake -G "MinGW Makefiles" ..
@@ -45,24 +47,43 @@ cmake -G "MinGW Makefiles" ..
 mingw32-make
 ```
 
-> If you prefer out-of-source builds for different configurations:
->
-> ```bash
-> cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ../
-> mingw32-make
-> ```
+### Linux / macOS
+
+```bash
+mkdir -p build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . -- -j$(nproc)
+```
+
+### Convenience script
+
+Alternatively use the included helper script on POSIX systems:
+
+```bash
+./build.sh
+```
+
+If you need a Windows helper, use `build.bat` (if present) or follow the Windows instructions above.
 
 ---
 
 ## Run
 
-After building, the executable will be in the `build/` directory:
+After building, the executable will be in the `build/` directory.
+
+On POSIX systems (Linux / macOS):
 
 ```bash
-./PhysicsEngine.exe
+./PhysicsEngine
 ```
 
-On Windows PowerShell or CMD use `.uild\PhysicsEngine.exe`.
+On Windows (MSYS2 / MINGW64 or PowerShell / CMD):
+
+```powershell
+.\PhysicsEngine.exe
+# or from the repository root
+build\PhysicsEngine.exe
+```
 
 ---
 
@@ -152,9 +173,10 @@ The simple `gravity_test` checks basic momentum conservation for a tiny two-body
 
 ## Clean helpers
 
-Use the provided scripts to quickly clean and recreate the `build/` directory:
+Use the helper script to quickly clean and recreate the `build/` directory:
 
-- POSIX / Git Bash: `scripts/clean_build.sh`
+- POSIX / Git Bash: `./build.sh`
+- Windows (MSYS2 / MINGW64): `build.bat` (if present) or follow the Windows build steps above)
 
 ---
 
@@ -164,3 +186,4 @@ Use the provided scripts to quickly clean and recreate the `build/` directory:
 - Consider adding a `CMakePresets.json` for standardized invocation across machines.
 
 ---
+

@@ -16,3 +16,4 @@ echo Recreated build directory: %CD%\build
 
 popd >nul 2>&1
 endlocal
+tel

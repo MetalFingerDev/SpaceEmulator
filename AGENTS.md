@@ -116,6 +116,8 @@ Add a GitHub Actions workflow that:
 
 ## For AI agents (operational guidance) 🤖
 
+> NOTE: Local experimental plotting changes were reverted on 2026-02-04 to keep the primary C++ codepath stable. Agents should avoid making persistent UI/visualization-only changes without a PR and tests.
+
 Purpose: help contributors by automating edits, refactors, tests, CI setup, and documentation while preserving build reproducibility.
 
 Agent rules and constraints:

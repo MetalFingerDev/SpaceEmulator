@@ -21,13 +21,17 @@ int main() {
     };
     double dt = 1.0; // seconds per step
 
-    // Compact two-column table: show x,y,vx,vy for each body and sample every 2 steps
-    constexpr auto row_fmt = "{:<4} | {:>10.2f} {:>8.2f} {:>8.2f} {:>8.2f} || {:>10.2f} {:>8.2f} {:>8.2f} {:>8.2f}\n";
+    // Compact two-column table: show x (scientific), y, vx, vy; sample every 2 steps
+    constexpr auto row_fmt = "{:<4} | {:>12.3e} {:>8.2f} {:>8.2f} {:>8.2f} || {:>12.3e} {:>8.2f} {:>8.2f} {:>8.2f}\n";
+
+    constexpr auto header_title = "{:<4} | {:>39} || {:>39}\n";
+    constexpr auto header_cols  = "{:<4} | {:>12} {:>8} {:>8} {:>8} || {:>12} {:>8} {:>8} {:>8}\n";
 
     std::cout << "\nGravity demo (sampled every 2 steps)\n";
-    std::cout << "--------------------------------------------------------------\n";
-    std::cout << std::format("{:<4} | {:>34} || {:>34}\n", "Step", "Body0 (x y vx vy)", "Body1 (x y vx vy)");
-    std::cout << "--------------------------------------------------------------\n";
+    std::cout << std::string(89, '-') << "\n";
+    std::cout << std::format(header_title, "Step", "Body0 (x y vx vy)", "Body1 (x y vx vy)");
+    std::cout << std::format(header_cols, "", "x(m)", "y(m)", "vx", "vy", "x(m)", "y(m)", "vx", "vy");
+    std::cout << std::string(89, '-') << "\n";
 
     for (int step = 0; step < 10; ++step) {
         simulate_gravity_step(bodies, dt);

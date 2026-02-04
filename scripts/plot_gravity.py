@@ -14,13 +14,13 @@ if len(sys.argv) < 2:
 
 path = sys.argv[1]
 data = defaultdict(list)
-with open(path, newline='') as f:
+with open(path, newline="") as f:
     reader = csv.DictReader(f)
     for row in reader:
-        step = int(row['step'])
-        body = int(row['body'])
-        x = float(row['x'])
-        y = float(row['y'])
+        step = int(row["step"])
+        body = int(row["body"])
+        x = float(row["x"])
+        y = float(row["y"])
         data[body].append((step, x, y))
 
 for body, rows in data.items():
@@ -28,11 +28,11 @@ for body, rows in data.items():
     steps = [r[0] for r in rows]
     xs = [r[1] for r in rows]
     ys = [r[2] for r in rows]
-    plt.plot(xs, ys, label=f'body {body}', marker='o')
+    plt.plot(xs, ys, label=f"body {body}", marker="o")
 
-plt.xlabel('x (m)')
-plt.ylabel('y (m)')
-plt.title('Gravity simulation (trajectory)')
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.title("Gravity simulation (trajectory)")
 plt.legend()
 plt.grid(True)
 plt.show()
